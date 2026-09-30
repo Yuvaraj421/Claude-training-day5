@@ -1,0 +1,230 @@
+PHARMA RISK ANALYZER - PROJECT STRUCTURE
+=========================================
+
+pharma-risk-analyzer/
+│
+├── 📄 Core Application Files
+│   ├── main.py                    (4.4 KB) - Streamlit dashboard UI
+│   ├── risk_analyzer.py           (4.2 KB) - Risk scoring engine
+│   └── create_sample_data.py      (2.0 KB) - Test data generator
+│
+├── 📊 Data Files
+│   └── sample_shipments.xlsx      (~50 KB) - Pre-generated test dataset
+│                                             150 pharma shipments
+│
+├── 📚 Documentation
+│   ├── README.md                  (5.2 KB) - Full feature documentation
+│   ├── CLAUDE.md                  (4.7 KB) - Development & architecture guide
+│   ├── QUICKSTART.md              (4.0 KB) - 5-minute setup guide
+│   ├── PROJECT_SUMMARY.md         (8.3 KB) - Comprehensive project overview
+│   └── STRUCTURE.txt              (This file)
+│
+├── ⚙️  Configuration
+│   ├── .claude/
+│   │   ├── settings.json          - Claude Code project config
+│   │   └── prompt.md              - Claude context for development
+│   ├── requirements.txt           - Python dependencies (5 packages)
+│   ├── .gitignore                 - Version control rules
+│   └── .git/                      - Git repository (3 commits)
+│
+└── 📋 This Directory Listing
+    └── STRUCTURE.txt              - You are here
+
+
+KEY FILES OVERVIEW
+==================
+
+1. main.py - Streamlit Dashboard
+   - 5 metric cards (total, high-risk, excursions, avg/max risk, delayed)
+   - Risk distribution chart (Plotly bar)
+   - Top 5 highest-risk list
+   - AI recommendation section
+   - Expandable detail views
+   - File uploader for custom data
+   - Risk threshold slider
+
+2. risk_analyzer.py - Risk Engine
+   - PharmaRiskAnalyzer class
+   - calculate_risk_scores() → scores each shipment
+   - get_high_risk_shipments() → filters by threshold
+   - get_temperature_excursions() → detects violations
+   - get_risk_distribution() → categorizes risks
+   - generate_recommendations() → creates alerts
+
+3. create_sample_data.py - Data Generator
+   - Generates 150 pharma shipments
+   - Includes random carriers, destinations, products
+   - Creates temperature excursions (20 shipments)
+   - Adds delays and transit delays
+   - Outputs: sample_shipments.xlsx
+
+4. sample_shipments.xlsx - Test Data
+   - 150 rows of pharma shipment data
+   - Columns: ID, Date, Destination, Product, Qty, Temps, Humidity, Hours, Carrier, Status
+   - Pre-generated with realistic scenarios
+   - Auto-loads in Streamlit when available
+
+
+WORKFLOW
+========
+
+Step 1: Setup
+   $ pip install -r requirements.txt      (2-3 min, pandas compiles)
+
+Step 2: Generate Data (Optional - sample_shipments.xlsx included)
+   $ python create_sample_data.py          (creates 150 test shipments)
+
+Step 3: Run Application
+   $ streamlit run main.py                (launches at localhost:8501)
+
+Step 4: Use Dashboard
+   - Enable "Use sample data" to see 150 shipments
+   - OR upload your own Excel file
+   - Adjust risk threshold slider (20-80)
+   - View metrics, chart, recommendations
+   - Expand to see detailed drilldowns
+
+
+GIT COMMITS
+===========
+
+[master b5021cb] Add comprehensive project summary and design documentation
+[master 8bc3f81] Add quickstart guide and Claude context prompt
+[master 70be0a0] Initial Pharma Risk Analyzer project setup
+
+
+DEPENDENCIES
+============
+
+streamlit==1.40.2        - Web UI framework
+pandas==2.2.3            - Data manipulation & Excel support
+openpyxl==3.11.0        - Excel file handling
+plotly==5.24.1           - Interactive charting
+numpy==1.26.4            - Numerical operations
+
+
+QUICK COMMANDS
+==============
+
+# Setup & Run
+cd /home/labuser/pharma-risk-analyzer
+pip install -r requirements.txt
+python create_sample_data.py
+streamlit run main.py
+
+# View Project
+git log --oneline
+git status
+ls -lah
+
+# Clean Cache
+streamlit cache clear
+
+# Kill Server
+pkill -f "streamlit run"
+
+
+FILE SIZES
+==========
+
+main.py                    4.4 KB
+risk_analyzer.py           4.2 KB
+create_sample_data.py      2.0 KB
+sample_shipments.xlsx     ~50 KB
+requirements.txt           78 bytes
+CLAUDE.md                  4.7 KB
+QUICKSTART.md              4.0 KB
+README.md                  5.2 KB
+PROJECT_SUMMARY.md         8.3 KB
+────────────────────────────────
+Total Code:             ~33 KB
+
+
+FEATURE CHECKLIST
+=================
+
+✅ Dashboard Metrics (5 cards)
+   - Total shipments
+   - High-risk count (%)
+   - Temperature excursions (%)
+   - Average risk score (max shown)
+   - Delayed shipments count
+
+✅ Risk Distribution Chart
+   - Plotly interactive bar chart
+   - 5 risk categories with colors
+   - Hover tooltips
+   - Legend
+
+✅ Top 5 Highest-Risk List
+   - Sorted by risk score
+   - Risk emojis (🔴, 🟠, 🟡)
+   - Risk score displayed
+
+✅ AI Recommendations
+   - High-risk threshold alert (>20%)
+   - Temperature control alert (>10%)
+   - Critical shipments alert (>80 score)
+   - Logistics delays alert (>5%)
+   - All-clear message if no issues
+
+✅ File Upload
+   - Excel (.xlsx) file uploader
+   - Automatic processing
+   - Error handling
+
+✅ Sample Data
+   - Pre-loaded 150 shipments
+   - Toggle in sidebar
+   - No upload needed for demo
+
+✅ Interactive Controls
+   - Risk threshold slider (20-80)
+   - File uploader
+   - Sample data checkbox
+
+✅ Expandable Details
+   - Top 10 highest-risk table
+   - Temperature excursion details
+   - Full formatting & styling
+
+
+CUSTOMIZATION POINTS
+====================
+
+risk_analyzer.py Line 25:  Adjust temperature weight (5-50 multiplier)
+risk_analyzer.py Line 30:  Change transit time threshold (>48 hours)
+risk_analyzer.py Line 33:  Modify delay penalty (currently 25 points)
+risk_analyzer.py Line 37:  Update carrier risk scores
+risk_analyzer.py Line 73:  Customize recommendation rules
+main.py Line 45:           Change high-risk threshold (currently 40)
+create_sample_data.py:     Modify sample data generation logic
+
+
+NEXT STEPS
+==========
+
+1. Test with sample data
+2. Upload your pharma data
+3. Adjust risk thresholds
+4. Customize recommendations
+5. Deploy to production
+6. Integrate with APIs
+7. Add historical tracking
+8. Implement alerts
+
+
+Need Help?
+==========
+
+See: QUICKSTART.md       → 5-minute setup guide
+See: CLAUDE.md           → Development guide
+See: README.md           → Full feature documentation
+See: PROJECT_SUMMARY.md  → Comprehensive overview
+
+Run: streamlit run main.py
+
+
+Created: 2026-09-05
+Last Updated: 2026-09-05
+Ready to run! 🚀
